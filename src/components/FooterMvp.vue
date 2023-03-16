@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-footer color="#40C4FF">
+        <v-footer color="#029aff">
         <v-row justify="center" no-gutters>
         <v-btn
             v-for="link in links"
