@@ -1,6 +1,8 @@
 <template>
-  <div class="body">
+  <v-app class="dark-back">
     <HeaderMvp/>
+    <br>
+    <br>
     <br>
     <br>
     <v-container>
@@ -8,64 +10,67 @@
       <br>
       <v-row>
         <v-col>
-          <h2 class="columnStyle">Logo</h2>
+          <h3 class="columnStyle">Logo</h3>
         </v-col>
         <v-col>
-          <h2 class="columnStyle">Name</h2>
+          <h3 class="columnStyle">Name</h3>
         </v-col>
         <v-col>
-          <h2 class="columnStyle">Price</h2>
+          <h3 class="columnStyle">Price</h3>
         </v-col>
         <v-col>
-          <h2 class="columnStyle">MarketCap</h2>
+          <h3 class="columnStyle">MarketCap</h3>
         </v-col>
         <v-col>
-          <h2 class="columnStyle">Rank</h2>
+          <h3 class="columnStyle">Rank</h3>
         </v-col>
         <v-col>
-          <h2 class="columnStyle">Total-Supply</h2>
+          <h3 class="columnStyle">Total-Supply</h3>
         </v-col>
         <v-col>
-          <h2 class="columnStyle">Trading Vol.</h2>
+          <h3 class="columnStyle">Trading Vol.</h3>
         </v-col>
         <v-col>
-          <h2 class="columnStyle">ATH</h2>
+          <h3 class="columnStyle">ATH</h3>
         </v-col>
         <v-col>
-          <h2 class="columnStyle">ATL</h2>
+          <h3 class="columnStyle">ATL</h3>
         </v-col>
       </v-row>
-      <div v-for="coin in marketCoin" :key="coin.name">
-          <v-row class="marketStyle">
-            <v-col>
-              <img class="coinImage" :src="coin.images" alt="" >
-            </v-col>
-            <v-col>
-              <h2 class="">{{ coin.name }}</h2>
-            </v-col>
-            <v-col>
-              <h2 class="">${{ coin.current_price }}</h2>
-            </v-col>
-            <v-col>
-              <h2 class="">${{ coin.market_cap }}</h2>
-            </v-col>
-            <v-col>
-              <h2 class="">{{ coin.market_cap_rank }}</h2>
-            </v-col>
-            <v-col>
-              <h2 class="">{{ coin.total_supply }}</h2>
-            </v-col>
-            <v-col>
-              <h2 class="">${{ coin.total_volume }}</h2>
-            </v-col>
-            <v-col>
-              <h2 class="">${{ coin.ath }}</h2>
-            </v-col>
-            <v-col>
-              <h2 class="">${{ coin.atl }}</h2>
-            </v-col>
-          </v-row>                    
+      <div class="text-center">
+      <v-progress-circular v-if="isLoading" :rotate="360" :size="100" :model-value="value" :width="10" color="blue" indeterminate class="progress"> {{ value }} </v-progress-circular>
       </div>
+        <div v-for="coin in marketCoin" :key="coin.name">
+            <v-row class="marketStyle">
+              <v-col>
+                <img class="coinImage" :src="coin.images" alt="" >
+              </v-col>
+              <v-col>
+                <h3 class="">{{ coin.name }}</h3>
+              </v-col>
+              <v-col>
+                <h3 class="">${{ coin.current_price }}</h3>
+              </v-col>
+              <v-col>
+                <h3 class="">${{ coin.market_cap }}</h3>
+              </v-col>
+              <v-col>
+                <h3 class="">{{ coin.market_cap_rank }}</h3>
+              </v-col>
+              <v-col>
+                <h3 class="">{{ coin.total_supply }}</h3>
+              </v-col>
+              <v-col>
+                <h3 class="">${{ coin.total_volume }}</h3>
+              </v-col>
+              <v-col>
+                <h3 class="">${{ coin.ath }}</h3>
+              </v-col>
+              <v-col>
+                <h3 class="">${{ coin.atl }}</h3>
+              </v-col>
+            </v-row>                    
+        </div>
         <br>
         <br>
         <br>
@@ -81,7 +86,7 @@
         <br>
       </v-container>
     <FooterMvp/>
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -102,6 +107,9 @@ import HeaderMvp from "@/components/HeaderMvp.vue";
       return {
         url: process.env.VUE_APP_API_URL,
         marketCoin : [],
+        interval: {},
+        value: 0,
+        isLoading: false,
         type: 'line',
         chartHeight: 2.5,
         chartWidth: 5,
@@ -119,6 +127,9 @@ import HeaderMvp from "@/components/HeaderMvp.vue";
       }
     },
     methods: {
+      loadData() {
+        this.isLoading = true;
+      },
       getAllcoin() {
         axios.request({
           method: "GET",
@@ -126,8 +137,10 @@ import HeaderMvp from "@/components/HeaderMvp.vue";
         }).then((response)=>{
           this.marketCoin = response.data
           this.updateChart();
+          this.isLoading = false;
         }).catch((error)=>{
           console.log(error);
+          this.isLoading = false;
         })
       },
       // I want a 1 hour x-axis loop, and the y-axis to be price
@@ -178,9 +191,32 @@ import HeaderMvp from "@/components/HeaderMvp.vue";
           }
         );
       },
+      beforeUnmount () {
+        clearInterval(this.interval)
+      },
     },
     mounted () {
-      this.getAllcoin();
+      this.loadData();
+      
+      this.interval = setInterval(() => {
+        if (this.value === 100) {
+          return (this.value = 0)
+        }
+        this.value += 10
+      }, 1000)
+      if (!this.intervalValid) {
+        this.intervalValid = setInterval(() => {
+          // this.isLoading = true;
+          this.getAllcoin();
+            // .then(() => {
+              // this.isLoading = false;
+            // });
+        }, 1 * 60 * 1000);
+      }
+    },
+    beforeDestroy () {
+      clearInterval(this.intervalValid);
+      this.intervalValid = null;
     },
     watch: {
         marketCoin: function() {
@@ -192,6 +228,13 @@ import HeaderMvp from "@/components/HeaderMvp.vue";
 
 <style scoped>
 
+.dark-back{
+  background-color: #f8ebdf;
+}
+
+.progress {
+  margin: 1rem;
+}
 .marketStyle {
   display: flex;
   flex-direction: row;

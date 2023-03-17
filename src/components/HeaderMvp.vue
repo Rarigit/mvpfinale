@@ -8,7 +8,7 @@
         <v-btn text @click="scroll('news')" class="text-yellow">News</v-btn>
         <v-btn text @click="scroll('sign-up')" class="text-yellow">Sign-Up</v-btn>
         <v-btn text @click="scroll('predict')" class="text-yellow">Predict</v-btn>
-        <v-btn text @click="scroll('watch-list')" class="text-yellow">Watch-list</v-btn>
+        <v-btn text @click="scroll('watch-list')" class="text-yellow" router-link to="/watch-list">Watch-list</v-btn>
     </v-app-bar>
     </div>
 </template>

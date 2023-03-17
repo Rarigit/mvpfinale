@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import FooterMvp from "@/components/FooterMvp.vue"
 import MainPage from "@/views/MainPage.vue"
 import HeaderMvp from "@/components/HeaderMvp.vue"
+import WatchList from "@/views/WatchList.vue"
 
 Vue.use(VueRouter)
 
@@ -18,6 +19,10 @@ const routes = [
   {
     path: "/footer",
     component: FooterMvp
+  },
+  {
+    path: "/watch-list",
+    component: WatchList
   }
 ]
 
