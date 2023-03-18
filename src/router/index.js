@@ -4,6 +4,10 @@ import FooterMvp from "@/components/FooterMvp.vue"
 import MainPage from "@/views/MainPage.vue"
 import HeaderMvp from "@/components/HeaderMvp.vue"
 import WatchList from "@/views/WatchList.vue"
+import RegisterClients from "@/components/RegisterClients.vue"
+import LoginClients from "@/views/LoginClients.vue"
+import DeleteClients from "@/components/DeleteClients.vue"
+import EditClients from "@/components/EditClients.vue"
 
 Vue.use(VueRouter)
 
@@ -23,7 +27,23 @@ const routes = [
   {
     path: "/watch-list",
     component: WatchList
-  }
+  },
+  {
+    path: "/registerClient",
+    component: RegisterClients
+  },
+  {
+    path: "/loginClient",
+    component: LoginClients
+  },
+  {
+    path: "/deleteClient",
+    component: DeleteClients
+  },
+  {
+    path: "/editClient",
+    component: EditClients
+  },
 ]
 
 const router = new VueRouter({
