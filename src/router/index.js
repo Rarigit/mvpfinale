@@ -8,6 +8,7 @@ import RegisterClients from "@/components/RegisterClients.vue"
 import LoginClients from "@/views/LoginClients.vue"
 import DeleteClients from "@/components/DeleteClients.vue"
 import EditClients from "@/components/EditClients.vue"
+import PortFolioProfile from "@/views/PortFolioProfile.vue"
 
 Vue.use(VueRouter)
 
@@ -43,6 +44,10 @@ const routes = [
   {
     path: "/editClient",
     component: EditClients
+  },
+  {
+    path: "/portProfile",
+    component: PortFolioProfile
   },
 ]
 
