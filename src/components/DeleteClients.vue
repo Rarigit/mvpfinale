@@ -1,10 +1,7 @@
 <template>
     <div>
         <v-container>
-            <h2>Delete User</h2>
-            <v-btn color="green" large class="styleButton"
-            @click="deleteClient">Delete User
-            </v-btn>
+            <v-btn color="black" large class="styleButton" @click="deleteClient">Delete User</v-btn>
         </v-container>
     </div>
 </template>
@@ -18,7 +15,7 @@ import cookies from "vue-cookies";
         name: "DeleteClients",
         data() {
             return {
-                //Absolutely nothing in terms of data
+                url: process.env.VUE_APP_API_URL,
             }
         },
         methods: {
@@ -39,6 +36,7 @@ import cookies from "vue-cookies";
                 }).then((response)=>{
                 console.log(response);
                 console.log("Successful Deletion");
+                alert("Successfully Deleted Client!")
                 cookies.remove(`clientToken`)
                 cookies.remove(`client`)
                 router.push('/loginClient')
@@ -53,8 +51,8 @@ import cookies from "vue-cookies";
 
 <style scoped>
 .styleButton{
-    color: black;
+    color: white;
     height: 7vh;
-    box-shadow: 2px 2px 3px;
+    /* box-shadow: 2px 2px 3px; */
 }
 </style>

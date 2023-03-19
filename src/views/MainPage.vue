@@ -146,15 +146,9 @@ import HeaderMvp from "@/components/HeaderMvp.vue";
       // I want a 1 hour x-axis loop, and the y-axis to be price
       generateLabels() {
         const labels = [];
-        // const now = new Date();
         for (let i = 0; i <=9; i++) {
-          // const date = new Date(now.getTime() - (i * 15 * 60 * 1000));
-          const volume = this.marketCoin[i].name;
-          labels.unshift(volume);
-          // const hour = date.getHours();
-          // const minute = date.getMinutes();
-          // const label = `${hour}:${minute < 10 ? '0' + minute : minute}`;
-          // labels.unshift(label);
+          const name = this.marketCoin[i].name;
+          labels.unshift(name);
         }
         return labels
       },
@@ -173,23 +167,70 @@ import HeaderMvp from "@/components/HeaderMvp.vue";
         if(this.chart) {
           this.chart.destroy();
         }
-        this.chart = new Chart(this.$refs.myChart, 
-        {
-          type: this.type,
+        const config = {
+          type: 'bar',
           data: this.chartData,
           options: {
+            responsive: true,
+            plugins: {
+              title: {
+                display: true,
+                text: 'Logarithmic Token vs Price Chart',
+                font: {
+                  family: 'Arial',
+                  size: 20,
+                  weight: 'bold'
+                }
+              }
+            },
             scales: {
-              yAxes: [{
+              x: {
+                display: true,
+                ticks: {
+                  font: {
+                    family: 'Arial',
+                    size: 16,
+                    weight: 'bold'
+                  },
+                  // max: Math.max(...this.marketCoin.map(d => d.name))
+                  },
+                title: {
+                  display: true,
+                  text: 'Token Name',
+                  font: {
+                    family: 'Arial',
+                    size: 18,
+                    weight: 'bold'
+                  },
+                }
+              },
+              y: {
+                display: true,
+                type: 'logarithmic',
                 ticks: {
                   beginAtZero: true,
-                  stepSize: 100,
+                  font: {
+                    family: 'Arial',
+                    size: 16,
+                    weight: 'bold'
+                  },
                   max: Math.max(...this.marketCoin.map(d => d.current_price))
+                  },
+                  title: {
+                    display: true,
+                    text: 'Price Data',
+                    font: {
+                      family: 'Arial',
+                      size: 18,
+                      weight: 'bold'
+                    }
                   }
-                }],
+                }
               }
             }
-          }
-        );
+          };
+          config.data.datasets[0].backgroundColor = 'green';
+          this.chart = new Chart(this.$refs.myChart, config);
       },
       beforeUnmount () {
         clearInterval(this.interval)
@@ -197,7 +238,7 @@ import HeaderMvp from "@/components/HeaderMvp.vue";
     },
     mounted () {
       this.loadData();
-      
+      this.getAllcoin();
       this.interval = setInterval(() => {
         if (this.value === 100) {
           return (this.value = 0)
@@ -229,7 +270,7 @@ import HeaderMvp from "@/components/HeaderMvp.vue";
 <style scoped>
 
 .dark-back{
-  background-color: #f8ebdf;
+  background-color: white;
 }
 
 .progress {

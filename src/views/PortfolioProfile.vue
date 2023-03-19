@@ -2,51 +2,34 @@
     <div class="bodyWrap">
     <HeaderMvp/>
     <br>
+    <br>
+    <br>
+    <br>
+    <br>
     <v-container v-if="!loggedIn">
-        <v-row>
-            <h1 class="mx-auto">Client Profile</h1>
-        </v-row>
-        <br>
-        <br>
-        <br>
         <div v-for="client in clients" :key="client.id">
             <v-row>
-                <h2 class="mx-auto">{{client.username}}</h2>
-                <h2 class="mx-auto">{{client.firstName}}</h2>
-                <h2 class="mx-auto">{{client.lastName}}</h2>
                 <h2 class="mx-auto">{{client.email}}</h2>
+                <h2 class="mx-auto">{{client.first_name}}</h2>
+                <h2 class="mx-auto">{{client.last_name}}</h2>
+                <h2 class="mx-auto">{{client.username}}</h2>
             </v-row>
         </div>
         <br>
         <br>
-        <v-row>
-            <v-btn class="mx-auto styleButton" router-link to="">Placeholder
-        </v-btn>
-        </v-row>
-        <br>
         <EditClients/>
         <br>
-        <v-row>
-            <v-btn class="mx-auto styleButton" @click="logOut">Client Logout</v-btn>
+        <br>
+        <br>
+        <br>
+        <v-row class="mx-auto">
+            <v-btn color="light-blue" large class="styleButton" @click="logOut">Client Logout</v-btn>
         </v-row>
-        <br>
-        <DeleteClients/>
-        <br>
-        <br>
         <br>
         <br>
         <br>
         <br>
     </v-container>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
     <br>
     <br>
     <br>
@@ -62,7 +45,6 @@ import axios from "axios";
 import router from '@/router';
 import HeaderMvp from "@/components/HeaderMvp.vue";
 import FooterMvp from "@/components/FooterMvp.vue"
-import DeleteClients from "@/components/DeleteClients.vue";
 import EditClients from "@/components/EditClients.vue";
 
     export default {
@@ -70,11 +52,11 @@ import EditClients from "@/components/EditClients.vue";
         components: {
             HeaderMvp,
             FooterMvp,
-            DeleteClients,
             EditClients
         },
         data() {
             return {
+                url: process.env.VUE_APP_API_URL,
                 clients: [],
                 loggedIn: false
             }
@@ -90,7 +72,7 @@ import EditClients from "@/components/EditClients.vue";
         mounted () {
             axios.request({
                 method: "GET",
-                url: this.url + "/api/clients",
+                url: this.url + "/clients",
                 headers: {
                     'token' : cookies.get('clientToken'),
                 },
@@ -102,7 +84,7 @@ import EditClients from "@/components/EditClients.vue";
                 }).catch((error)=>{
                 console.log(error);
                 console.log("Error: Access Denied!")
-                router.push(`//loginClient`)
+                router.push(`/loginClient`)
                 });
         },
     }
@@ -111,13 +93,13 @@ import EditClients from "@/components/EditClients.vue";
 <style scoped>
 
 .bodyWrap{
-        /* background-image: url(https://imgs.search.brave.com/R43Gdc2AQBiKlWckaWpR5-s3blyDQ3ONG55iwipwWEM/rs:fit:713:225:1/g:ce/aHR0cHM6Ly90c2Uz/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5C/b25pS1hHYlAxSHB6/YkozVlpiM3VRSGFF/NyZwaWQ9QXBp); */
-        background-color: #f8ebdf;
+        /* background-color: #f8ebdf; */
+        background-image: url(@/assets/logwhite.png);
         background-repeat: no-repeat;
         background-size: cover;
     }
 .styleButton{
-        color: black;
+        color: white;
         height: 7vh;
         box-shadow: 2px 2px 3px;
     }

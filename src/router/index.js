@@ -3,12 +3,11 @@ import VueRouter from 'vue-router'
 import FooterMvp from "@/components/FooterMvp.vue"
 import MainPage from "@/views/MainPage.vue"
 import HeaderMvp from "@/components/HeaderMvp.vue"
-import WatchList from "@/views/WatchList.vue"
 import RegisterClients from "@/components/RegisterClients.vue"
 import LoginClients from "@/views/LoginClients.vue"
 import DeleteClients from "@/components/DeleteClients.vue"
 import EditClients from "@/components/EditClients.vue"
-import PortFolioProfile from "@/views/PortFolioProfile.vue"
+import PortfolioProfile from "@/views/PortfolioProfile.vue"
 
 Vue.use(VueRouter)
 
@@ -24,10 +23,6 @@ const routes = [
   {
     path: "/footer",
     component: FooterMvp
-  },
-  {
-    path: "/watch-list",
-    component: WatchList
   },
   {
     path: "/registerClient",
@@ -47,7 +42,7 @@ const routes = [
   },
   {
     path: "/portProfile",
-    component: PortFolioProfile
+    component: PortfolioProfile
   },
 ]
 

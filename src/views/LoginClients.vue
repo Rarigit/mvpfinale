@@ -14,58 +14,92 @@
         <br>
         <br>
         <v-container>
-            <v-form class="d-flex align-center">
-                <v-text-field
-                v-model="formData.email"
-                :rules="emailRules"
-                label="E-mail"
-                prepend-icon="mdi-email"
-                required
-                />
-                <v-spacer></v-spacer>
-                <v-text-field
-                v-model="formData.password"
-                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                :rules="[rules.required, rules.min]"
-                :type="show1 ? 'text' : 'password'"
-                name="input-10-1"
-                label="Enter Password"
-                hint="At least 8 characters"
-                counter
-                @click:append="show1 = !show1"
-                />
-                <br>
-                <br>
-                <br>
-                <v-btn color="green" large class="ml-5" @click="logClients">Client Login
-                </v-btn>
-                <br>
-                <v-spacer></v-spacer>
-                <br>
-                <v-btn class="ml-5" router-link to="/registerClient">Register as Client
-                </v-btn>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-            </v-form>
+            <v-row align="center" justify="center">
+                <v-col cols="12" sm="10">
+                    <v-card class="elevation-6 mt-10">
+                        <v-window v-model="step">
+                            <v-window-item :value="1">
+                                <v-row>
+                                    <v-col cols="12" sm="6">
+                                        <v-card-text class="mt-12">
+                                            <v-row align="center" justify="center">
+                                                <v-col cols="12" sm="8">
+                                                    <v-text-field
+                                                    v-model="formData.email"
+                                                    :rules="emailRules"
+                                                    label="Enter e-mail"
+                                                    prepend-icon="mdi-email"
+                                                    required
+                                                    />
+                                                    <v-spacer></v-spacer>
+                                                    <v-text-field
+                                                    v-model="formData.password"
+                                                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                                                    :rules="[rules.required, rules.min]"
+                                                    :type="show1 ? 'text' : 'password'"
+                                                    name="input-10-1"
+                                                    label="Enter password"
+                                                    hint="At least 8 characters"
+                                                    counter
+                                                    @click:append="show1 = !show1"
+                                                    />
+                                                    <br>
+                                                    <br>
+                                                    <v-row class="mx-auto ">
+                                                        <v-btn color="blue" large class="ml-5 white--text" @click="logClients">Client Login</v-btn>
+                                                    </v-row>
+                                                    <br>
+                                                    <br>
+                                                    <br>
+                                                    <br>
+                                                    <v-spacer></v-spacer>
+                                                    <br>
+                                                    <br>
+                                                    <br>
+                                                    <br>
+                                                </v-col>
+                                            </v-row>
+                                        </v-card-text>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" class="blue rounded-bl-xl">
+                                        <div style="text-align:center; padding: 180px 0;">
+                                            <v-card-text class="white--text">
+                                                <h2 class="text-center">No account?</h2>
+                                                <h4 class="text-center">
+                                                    Get set up here
+                                                </h4>
+                                            </v-card-text>
+                                            <div class="text-center">
+                                                <v-btn tile outlined dark class="ml-5" router-link to="/registerClient">Register as Client</v-btn>
+                                            </div>
+                                        </div>
+                                    </v-col>
+                                </v-row>
+                            </v-window-item>
+                        </v-window>
+                    </v-card>
+                </v-col>
+            </v-row>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
         </v-container>
         <FooterMvp/>
     </div>
@@ -86,7 +120,7 @@ import FooterMvp from "@/components/FooterMvp.vue";
         data() {
             return {
                 show1: false,
-                apiKey: process.env.VUE_APP_API_KEY,
+                url: process.env.VUE_APP_API_URL,
                 formData: {
                     email: "",
                     password: "",
@@ -119,7 +153,7 @@ import FooterMvp from "@/components/FooterMvp.vue";
                 cookies.set(`client`, user)
                 let userToken = response.data.token;
                 cookies.set(`clientToken`, userToken);
-                router.push(`/watch-list`)
+                router.push(`/portProfile`)
                 }).catch((error)=>{
                 console.log(error);
                 this.error = true
@@ -127,19 +161,20 @@ import FooterMvp from "@/components/FooterMvp.vue";
             }
         },
         mounted () {
-            //Deletes cookies after i press the back button. Hopefully it works
-            window.onbeforeunload = function() {
-            document.cookie = "clientToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            document.cookie = "client=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            };
+            //Bun this function it keeps deleting my cookies on every save i do as its a refresh
+            //Deletes cookies after i press the back button. Hopefully it works. Yup it does upon refresh
+            // window.onbeforeunload = function() {
+            // document.cookie = "clientToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            // document.cookie = "client=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            // };
         },
     }
 </script>
 
 <style scoped>
 .bodyWrap{
-        /* background-image: url(https://imgs.search.brave.com/HLeqRVTtcQlw4vwIJr8tkCJawN5obKK30DKXmuxJ1LA/rs:fit:920:225:1/g:ce/aHR0cHM6Ly90c2Ux/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5h/VWpPUENZSE5ZV2Qx/Z3NJRmU3bldRSGFE/MCZwaWQ9QXBp); */
-        background-color: #f8ebdf;
+        background-image: url(@/assets/logwhite.png);
+        /* background-color: #f8ebdf; */
         background-repeat: no-repeat;
         background-size: cover;
     }
