@@ -1,4 +1,6 @@
 <template>
+  <div>
+  <OpeningMain/>
   <v-app class="dark-back">
     <HeaderMvp/>
     <br>
@@ -87,6 +89,7 @@
       </v-container>
     <FooterMvp/>
   </v-app>
+  </div>
 </template>
 
 <script>
@@ -94,12 +97,12 @@ import FooterMvp from "@/components/FooterMvp.vue"
 import axios from 'axios'
 import Chart from 'chart.js/auto';
 import HeaderMvp from "@/components/HeaderMvp.vue";
-
-
+import OpeningMain from "@/components/OpeningMain.vue";
 
   export default {
     name: "MainPage",
     components: {
+      OpeningMain,
       HeaderMvp,
       FooterMvp,
     },
