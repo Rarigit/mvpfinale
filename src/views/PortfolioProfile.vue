@@ -9,10 +9,10 @@
     <v-container v-if="!loggedIn">
         <div v-for="client in clients" :key="client.id">
             <v-row>
-                <h2 class="mx-auto">{{client.email}}</h2>
-                <h2 class="mx-auto">{{client.first_name}}</h2>
-                <h2 class="mx-auto">{{client.last_name}}</h2>
-                <h2 class="mx-auto">{{client.username}}</h2>
+                <h2 class="mx-auto black--text">{{client.email}}</h2>
+                <h2 class="mx-auto black--text">{{client.first_name}}</h2>
+                <h2 class="mx-auto black--text">{{client.last_name}}</h2>
+                <h2 class="mx-auto clack---text">{{client.username}}</h2>
             </v-row>
         </div>
         <br>

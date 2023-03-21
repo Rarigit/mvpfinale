@@ -3,7 +3,7 @@
   <OpeningMain/>
   <v-app class="dark-back">
     <HeaderMvp/>
-    <br>
+    <DescriptionMain/>
     <br>
     <br>
     <br>
@@ -40,7 +40,7 @@
         </v-col>
       </v-row>
       <div class="text-center">
-      <v-progress-circular v-if="isLoading" :rotate="360" :size="100" :model-value="value" :width="10" color="blue" indeterminate class="progress"> {{ value }} </v-progress-circular>
+      <v-progress-circular v-if="isLoading" :rotate="360" :size="50" :model-value="value" :width="5" color="blue" indeterminate class="progress"> {{ value }} </v-progress-circular>
       </div>
         <div v-for="coin in marketCoin" :key="coin.name">
             <v-row class="marketStyle">
@@ -98,14 +98,16 @@ import axios from 'axios'
 import Chart from 'chart.js/auto';
 import HeaderMvp from "@/components/HeaderMvp.vue";
 import OpeningMain from "@/components/OpeningMain.vue";
+import DescriptionMain from "@/components/DescriptionMain.vue";
 
   export default {
     name: "MainPage",
     components: {
-      OpeningMain,
-      HeaderMvp,
-      FooterMvp,
-    },
+    OpeningMain,
+    HeaderMvp,
+    FooterMvp,
+    DescriptionMain
+},
     data() {
       return {
         url: process.env.VUE_APP_API_URL,

@@ -12,6 +12,7 @@ import OpeningMain from "@/components/OpeningMain.vue"
 import PortfolioMain from "@/views/PortfolioMain.vue"
 import TopPortBar from "@/components/TopPortBar.vue"
 import PortBalance from "@/components/PortBalance.vue"
+import DescriptionMain from "@/components/DescriptionMain.vue"
 
 Vue.use(VueRouter)
 
@@ -63,6 +64,10 @@ const routes = [
   {
     path: "/portBalance",
     component: PortBalance
+  },
+  {
+    path: "/describeMain",
+    component: DescriptionMain
   }
 ]
 
