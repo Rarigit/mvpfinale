@@ -153,7 +153,7 @@ import FooterMvp from "@/components/FooterMvp.vue";
                 cookies.set(`client`, user)
                 let userToken = response.data.token;
                 cookies.set(`clientToken`, userToken);
-                router.push(`/portfolio`)
+                router.push(`/clientProfile`)
                 }).catch((error)=>{
                 console.log(error);
                 this.error = true

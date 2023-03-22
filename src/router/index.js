@@ -7,12 +7,13 @@ import RegisterClients from "@/components/RegisterClients.vue"
 import LoginClients from "@/views/LoginClients.vue"
 import DeleteClients from "@/components/DeleteClients.vue"
 import EditClients from "@/components/EditClients.vue"
-import PortfolioProfile from "@/views/PortfolioProfile.vue"
+import ClientProfile from "@/views/ClientProfile.vue"
 import OpeningMain from "@/components/OpeningMain.vue"
 import PortfolioMain from "@/views/PortfolioMain.vue"
 import TopPortBar from "@/components/TopPortBar.vue"
-import PortBalance from "@/components/PortBalance.vue"
+import VertNav from "@/components/VertNav.vue"
 import DescriptionMain from "@/components/DescriptionMain.vue"
+import RegisterFolio from "@/components/RegisterFolio.vue"
 
 Vue.use(VueRouter)
 
@@ -46,8 +47,8 @@ const routes = [
     component: EditClients
   },
   {
-    path: "/portProfile",
-    component: PortfolioProfile
+    path: "/clientProfile",
+    component: ClientProfile
   },
   {
     path: "/open",
@@ -58,17 +59,25 @@ const routes = [
     component: PortfolioMain
   },
   {
-    path: "/portBar",
+    path: "/topPort",
     component: TopPortBar
   },
   {
-    path: "/portBalance",
-    component: PortBalance
+    path: "/vertNav",
+    component: VertNav
   },
   {
     path: "/describeMain",
     component: DescriptionMain
-  }
+  },
+  {
+    path: "/registerFolio",
+    component: RegisterFolio
+  },
+
+
+
+
 ]
 
 const router = new VueRouter({

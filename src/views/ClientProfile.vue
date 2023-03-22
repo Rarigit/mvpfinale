@@ -28,6 +28,9 @@
         <br>
         <br>
         <br>
+        <v-row class="mx-auto">
+            <v-btn color="light-blue" large class="styleButton" router-link to="/portfolio">Portfolios</v-btn>
+        </v-row>
         <br>
     </v-container>
     <br>
@@ -48,7 +51,7 @@ import FooterMvp from "@/components/FooterMvp.vue"
 import EditClients from "@/components/EditClients.vue";
 
     export default {
-        name: "PortFolioProfile",
+        name: "ClientProfile",
         components: {
             HeaderMvp,
             FooterMvp,
