@@ -31,6 +31,7 @@
                                                     />
                                                     <v-text-field
                                                     v-model="formData.name"
+                                                    :rules="[() => !!formData.name || 'This field is required']"
                                                     label="Enter Coin Name"
                                                     placeholder="John"
                                                     prepend-icon="mdi-currency-btc"
@@ -49,21 +50,10 @@
                                                     />
                                                     <v-text-field
                                                     v-model="formData.clientEmail"
+                                                    :rules="emailRules"
                                                     label="Enter e-mail"
                                                     prepend-icon="mdi-email"
                                                     />
-                                                    <!-- <v-text-field
-                                                    v-model="formData.password"
-                                                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                                                    :rules="[rules.required, rules.min]"
-                                                    :type="show1 ? 'text' : 'password'"
-                                                    name="input-10-1"
-                                                    label="Enter password"
-                                                    hint="At least 8 characters"
-                                                    counter
-                                                    prepend-icon="mdi-lock"
-                                                    @click:append="show1 = !show1"
-                                                    /> -->
                                                     <br>
                                                     <br>
                                                     <v-row class="mx-auto">
@@ -87,9 +77,6 @@
                                                 </h2>
                                             </v-card-text>
                                             <br>
-                                            <!-- <div class="text-center">
-                                                <v-btn tile outlined dark class="ml-5" router-link to="/loginClient">Login</v-btn>
-                                            </div> -->
                                         </div>
                                     </v-col>
                                 </v-row>
@@ -136,15 +123,15 @@ import FooterMvp from "@/components/FooterMvp.vue";
                     quantity: "",
                     clientEmail: "",
                 },
-                // rules: {
-                //     required: value => !!value || 'Required.',
-                //     min: v => v.length >= 8 || 'Min 8 characters',
-                //     emailMatch: () => (`The email and password you entered don't match`),
-                // },
-                // emailRules: [
-                //     v => !!v || 'E-mail is required',
-                //     v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-                // ],
+                rules: {
+                    required: value => !!value || 'Required.',
+                    min: v => v.length >= 8 || 'Min 8 characters',
+                    emailMatch: () => (`The email and password you entered don't match`),
+                },
+                emailRules: [
+                    v => !!v || 'E-mail is required',
+                    v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+                ],
             }
         },
         methods: {
@@ -157,7 +144,7 @@ import FooterMvp from "@/components/FooterMvp.vue";
                     name: this.formData.name,
                     purchasePrice: this.formData.purchasePrice,
                     quantity: this.formData.quantity,
-                    email: this.formData.clientEmail,
+                    clientEmail: this.formData.clientEmail,
                 }
                 }).then((response)=>{
                     console.log("Successfully registered new portfolio!")

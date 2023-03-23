@@ -1,9 +1,6 @@
 <template>
     <v-app>
-        <!-- Put Portfolio get request in here -->
     <TopPortBar/>
-    <br>
-    <br>
             <v-row class="marketStyle mx-auto">
                 <v-spacer></v-spacer>
                 <v-col>
@@ -19,7 +16,7 @@
                     <h3 class="columnStyle">Quantity of Coins Held</h3>
                 </v-col>
                 <v-col class="highlight">
-                    <h3 class="columnStyle">Return On Investment (ROI)</h3>
+                    <h3 class="columnStyle">Profits &/Or Losses (P&L)</h3>
                 </v-col>
             </v-row>
             <div v-for="portfolio in portfolios" :key="portfolio.client_id" class="mx-auto">
@@ -29,19 +26,36 @@
                     <h3 class="">{{ portfolio.name }}</h3>
                 </v-col>
                 <v-col>
-                    <h3 class="">${{ portfolio.current_price }}</h3>
+                    <h3 class="">$ {{ portfolio.current_price }}</h3>
                 </v-col>
                 <v-col>
-                    <h3 class="">${{ portfolio.purchase_price }}</h3>
+                    <h3 class="">$ {{ portfolio.purchase_price }}</h3>
                 </v-col>
                 <v-col>
                     <h3 class="">{{ portfolio.quantity }}</h3>
                 </v-col>
                 <v-col class="highlight">
-                    <h3 class="">{{ calculateROI(portfolio) }} %</h3>
+                    <h3 class="">$ {{ calculateROI(portfolio).profitOrLoss }}</h3>
                 </v-col>
             </v-row> 
-        </div>                   
+        </div> 
+        <v-row class="marketStyle mx-auto">
+            <v-spacer></v-spacer>
+            <v-spacer></v-spacer>
+            <v-spacer></v-spacer>
+            <v-spacer></v-spacer>
+            <v-col>
+                <h3 class="columnStyle totalHighlight">Total P&L: </h3>
+            </v-col>
+            <v-col>
+                <h3 class="totalHighlight columnStyle">$ {{ totalProfitOrLoss }}</h3>
+            </v-col>
+        </v-row> 
+        <br>
+        <br>
+        <div>
+            <canvas ref="myChart" :height="chartHeight" :width="chartWidth" class="mt-n1"></canvas>
+        </div>                
     <VertNav/>
     <FooterMvp/>
     </v-app>
@@ -54,6 +68,7 @@ import router from '@/router';
 import TopPortBar from "@/components/TopPortBar.vue"
 import VertNav from "@/components/VertNav.vue";
 import FooterMvp from "@/components/FooterMvp.vue";
+import Chart from 'chart.js/auto';
 
 
     export default {
@@ -67,8 +82,35 @@ import FooterMvp from "@/components/FooterMvp.vue";
             return {
                 url: process.env.VUE_APP_API_URL,
                 portfolios: [],
-                loggedIn: false
+                loggedIn: false,
+                interval: {},
+                value: 0,
+                isLoading: false,
+                type: 'line',
+                chartHeight: 1000,
+                chartWidth: 1000,
+                chart: null,
+                chartData: {
+                    labels: [],
+                    datasets: [{
+                    label: 'PRICE CHART',
+                    data: [],
+                    backgroundColor: [],
+                    chartHeight: 1000,
+                    chartWidth: 1000,
+                    }],
+                }
             }
+        },
+        computed: {
+            totalProfitOrLoss() {
+                let total = 0;
+                this.portfolios.forEach((portfolio) => {
+                    const { profitOrLoss } = this.calculateROI(portfolio);
+                    total += Number(profitOrLoss);
+                });
+                return total.toFixed(2);
+            },
         },
         methods: {
             logOut() {
@@ -84,10 +126,82 @@ import FooterMvp from "@/components/FooterMvp.vue";
                 const totalInvestment = purchasePrice * quantity;
                 const currentPortValue = currentPrice * quantity;
                 const profitOrLoss = currentPortValue - totalInvestment;
-                const roi = (profitOrLoss / totalInvestment) * 100;
-                return roi.toFixed(2);
+                return {
+                        profitOrLoss: profitOrLoss.toFixed(2),
+                        totalInvestment: totalInvestment.toFixed(2),
+                        currentPortValue: currentPortValue.toFixed(2),
+                };
             },
-        },
+            generateLabels() {
+                return this.portfolios.map(portfolio => portfolio.name);
+            },
+            generateData() {
+                return this.portfolios.map(portfolio => portfolio.quantity);
+            },
+            generateColors() {
+                const fixedColors = [
+                    '#FF6633',
+                    '#B34D4D',
+                    '#FFB399',
+                    '#FF33FF',
+                    '#FFFF99',
+                    '#00B3E6',
+                    '#E6B333',
+                    '#3366E6',
+                    '#999966',
+                    '#99FF99',
+                ]
+                return this.portfolios.map((portfolio, index) => {
+                    if (fixedColors[index]) {
+                        return fixedColors[index];
+                    }
+
+                    const r = (index * 7) % 256;
+                    const g = (index * 23) % 256;
+                    const b = (index * 47) % 256;
+                    return `rgb(${r}, ${g}, ${b})`;
+                });
+            },
+            createChart() {
+                this.chartData.labels = this.generateLabels();
+                this.chartData.datasets[0].data = this.generateData();
+                this.chartData.datasets[0].backgroundColor = this.generateColors();
+                if(this.chart) {
+                this.chart.destroy();
+                }
+                const config = {
+                    type: 'pie',
+                    data: this.chartData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    font: {
+                                        size: 16
+                                    }
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Portfolio Holdings',
+                                font: {
+                                    family: 'Arial',
+                                    size: 30,
+                                    weight: 'bold'
+                                },
+                                // width: 1000,
+                                // height: 1000
+                            }
+                        },
+                        // width: 1000,
+                        // height: 1000
+                    }
+                };        
+                this.chart = new Chart(this.$refs.myChart, config);
+            },
+        },        
         mounted () {
             axios.request({
                 method: "GET",
@@ -98,21 +212,28 @@ import FooterMvp from "@/components/FooterMvp.vue";
                 }).then((response)=>{
                 console.log(response);
                 this.portfolios = response.data;
-                console.log("Successfully retrieved client data")
-                console.log("Success")
+                console.log("Successfully retrieved client data");
+                console.log("Success");
+                this.createChart();
                 }).catch((error)=>{
                 console.log(error);
                 console.log("Error: Access Denied!")
                 router.push(`/loginClient`)
-                }); 
+                });
         },
     }
 </script>
 
 <style scoped>
 
+
 .highlight {
-    background-color: rgb(109, 255, 109);
+    background-color: rgb(255, 208, 0);
+    font-weight: bold;
+}
+
+.totalHighlight {
+    background-color: rgb(7, 255, 28);
     font-weight: bold;
 }
 
@@ -128,7 +249,7 @@ import FooterMvp from "@/components/FooterMvp.vue";
 }
 
 .columnStyle {
-    color: purple;
+    color: black;
 }
 
 .styleButton{

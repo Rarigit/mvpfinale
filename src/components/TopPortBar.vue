@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar color="#029aff" flat class="mt-0">
+    <v-app-bar color="#029aff" flat class="mt-0" height="100vh">
         <v-row class="mx-auto">
             <!-- Gonna put a get request on this page and display current User's name below -->
             <v-spacer></v-spacer>
