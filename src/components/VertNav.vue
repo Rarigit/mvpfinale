@@ -15,17 +15,15 @@
                 </v-list-item>
             </v-list>
             <v-list>
-            <v-list-item class="mb-10" router to="/editFolio">
+            <v-list-item class="mb-10" router to="/portProfile">
                 <v-list-item-content>
-                    <v-text-field class="mb-1" large prepend-icon="mdi-pen" label="Portfolio Edit"></v-text-field>
+                    <v-text-field class="mb-1" large prepend-icon="mdi-pen" label="Portfolio Profile"></v-text-field>
                 </v-list-item-content>
             </v-list-item>
             </v-list>
-            <v-list-item router to="/loginClient" style="position: absolute; bottom:0" class="ml-12" flat>
-                <v-btn>
-                    <v-text-field class="mb-7" large prepend-icon="mdi-logout" label="Sign Out"></v-text-field>
-                </v-btn>
-            </v-list-item>
+            <v-list style="position: absolute; bottom:0" class="ml-12" flat>
+                <v-btn @click="logOut" tile outlined dark class="ml-5" >Sign Out</v-btn>
+            </v-list>
         </v-navigation-drawer>
     </nav>
     </v-app>

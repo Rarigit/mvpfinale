@@ -252,11 +252,7 @@ import DescriptionMain from "@/components/DescriptionMain.vue";
       }, 1000)
       if (!this.intervalValid) {
         this.intervalValid = setInterval(() => {
-          // this.isLoading = true;
           this.getAllcoin();
-            // .then(() => {
-              // this.isLoading = false;
-            // });
         }, 1 * 60 * 1000);
       }
     },

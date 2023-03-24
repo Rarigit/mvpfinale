@@ -14,6 +14,10 @@ import TopPortBar from "@/components/TopPortBar.vue"
 import VertNav from "@/components/VertNav.vue"
 import DescriptionMain from "@/components/DescriptionMain.vue"
 import RegisterFolio from "@/components/RegisterFolio.vue"
+import ModifyFolio from "@/components/ModifyFolio.vue"
+import PortfolioProfile from "@/views/PortfolioProfile.vue"
+import DeleteFolio from "@/components/DeleteFolio.vue"
+
 
 Vue.use(VueRouter)
 
@@ -73,6 +77,18 @@ const routes = [
   {
     path: "/registerFolio",
     component: RegisterFolio
+  },
+  {
+    path: "/modifyFolio",
+    component: ModifyFolio
+  },
+  {
+    path: "/portProfile",
+    component: PortfolioProfile
+  },
+  {
+    path: "/deleteFolio",
+    component: DeleteFolio
   },
 
 

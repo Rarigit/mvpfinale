@@ -1,13 +1,12 @@
 <template>
     <div class="bodyWrap">
-        <HeaderMvp/>
         <br>
         <br>
         <br>
         <br>
         <br>
         <v-row class="mx-auto black--text">
-            <h1 class="mx-auto pFont">PortFolio Register</h1>
+            <h1 class="mx-auto pFont">Modify your Portfolio</h1>
         </v-row>
         <br>
         <br>
@@ -22,42 +21,34 @@
                                         <v-card-text class="mt-12">
                                             <v-row align="center" justify="center">
                                                 <v-col cols="12" sm="8">
-                                                <!-- <div class="formData"> -->
                                                     <v-text-field
-                                                    v-model="formData.clientId"
-                                                    label="Enter clientId"
-                                                    placeholder="JohnDoe7"
-                                                    prepend-icon="mdi-mouse"
+                                                    v-model="id"
+                                                    label="Enter Portfolio ID:"
+                                                    placeholder="John"
+                                                    prepend-icon="mdi-account"
                                                     />
                                                     <v-text-field
-                                                    v-model="formData.name"
-                                                    :rules="[() => !!formData.name || 'This field is required']"
+                                                    v-model="name"
                                                     label="Enter Coin Name"
                                                     placeholder="John"
                                                     prepend-icon="mdi-currency-btc"
                                                     />
                                                     <v-text-field
-                                                    v-model="formData.purchasePrice"
+                                                    v-model="purchasePrice"
                                                     label="Enter Purchase Price"
                                                     prepend-icon="mdi-cash"
                                                     placeholder="Doe"
                                                     />
                                                     <v-text-field
-                                                    v-model="formData.quantity"
+                                                    v-model="quantity"
                                                     label="Enter quantity"
                                                     prepend-icon="mdi-shovel"
                                                     placeholder="Doe"
                                                     />
-                                                    <v-text-field
-                                                    v-model="formData.clientEmail"
-                                                    :rules="emailRules"
-                                                    label="Enter e-mail"
-                                                    prepend-icon="mdi-email"
-                                                    />
                                                     <br>
                                                     <br>
                                                     <v-row class="mx-auto">
-                                                        <v-btn color="green" large class="styleButton" @click="postFolio">PortFolio Register</v-btn>
+                                                        <v-btn color="green" large class="styleButton" @click="editFolio">PortFolio Edits</v-btn>
                                                     </v-row>
                                                     <br>
                                                     <br>
@@ -75,7 +66,16 @@
                                                 <h2 class="text-center black--text">
                                                     Bitcoin, Ethereum, Tether, BNB, Litecoin, Avalanche, Matic, Uniswap, Solana, Polkadot
                                                 </h2>
+                                                <br>
+                                                <br>
                                             </v-card-text>
+                                            <div class="text-center">
+                                                <h2 class="text-center">Are you sure you want to delete?</h2>
+                                                <h3 class="text-center">
+                                                    Delete your profile here
+                                                </h3>
+                                                <DeleteFolio/>
+                                            </div>
                                             <br>
                                         </div>
                                     </v-col>
@@ -94,85 +94,67 @@
             <br>
             <br>
         </v-container>
-        <FooterMvp/>
     </div>
 </template>
 
 <script>
 import axios from "axios";
-import router from "@/router";
 import cookies from "vue-cookies"
-import HeaderMvp from "@/components//HeaderMvp.vue";
-import FooterMvp from "@/components/FooterMvp.vue";
-
+import DeleteFolio from "@/components/DeleteFolio.vue"
 
     export default {
-        name: "RegisterFolio",
+        name: "ModifyFolio",
         components: {
-            HeaderMvp,
-            FooterMvp
+            DeleteFolio,
         },
         data() {
             return {
                 url: process.env.VUE_APP_API_URL,
                 show1: false,
-                formData: {
-                    clientId: "",
-                    name: "",
-                    purchasePrice: "",
-                    quantity: "",
-                    clientEmail: "",
-                },
-                rules: {
-                    required: value => !!value || 'Required.',
-                    min: v => v.length >= 8 || 'Min 8 characters',
-                    emailMatch: () => (`The email and password you entered don't match`),
-                },
-                emailRules: [
-                    v => !!v || 'E-mail is required',
-                    v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-                ],
+                id: "",
+                name: "",
+                purchasePrice: "",
+                quantity: "",
             }
         },
         methods: {
-            postFolio() {
+            editFolio() {
                 axios.request({
-                    method: "POST",
+                    method: "PATCH",
                     url: this.url + "/portfolio",
-                data: {
-                    clientId: this.formData.clientId,
-                    name: this.formData.name,
-                    purchasePrice: this.formData.purchasePrice,
-                    quantity: this.formData.quantity,
-                    clientEmail: this.formData.clientEmail,
-                }
-                }).then((response)=>{
-                    console.log("Successfully registered new portfolio!")
-                    console.log(response)
-                    let portId = response.data.portId;
-                    cookies.set(`portfolioId`, portId)
-                    router.push('/portProfile')
-                }).catch((error)=>{
+                    // headers: this.headers,
+                    headers: {
+                        'portId' : cookies.get('portfolioId_1'),
+                        'token' : cookies.get('clientToken'),
+                    },
+                    data: {
+                        id: this.id,
+                        name: this.name,
+                        purchasePrice: this.purchasePrice,
+                        quantity: this.quantity,
+                    },
+                    }).then((response) =>{
+                    console.log(response);
+                    console.log("Successful updated portfolio")
+                    alert("Successfully updated portfolio")
+                    }).catch((error)=>{
                     console.log(error);
-                    alert("Error: Please ensure that the coin selected is from the list of coins provided, also please verify that the purchase-price that you've inputted is below the ATH price of that coin");
-                    // cookies.remove(`clientToken`);
-                    // cookies.remove('client');
-                    // router.push('/loginClient');
-                })
+                    console.log("Error: Failed to update portfolio")
+                    alert("Error: Failed to update portfolio")
+                    })
             }
         },
         mounted () {
-            this.$root.$emit('portfolioId');
+            const allCookies = cookies.get();
+            this.headers = {};
+            for (const cookieName in allCookies) {
+                this.headers[cookieName] = allCookies[cookieName];
+            }
         },
     }
+
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap');
-.pFont {
-    font-family: 'Lato', sans-serif;
-}
-
-
 
 </style>

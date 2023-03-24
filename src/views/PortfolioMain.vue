@@ -53,8 +53,11 @@
         </v-row> 
         <br>
         <br>
+        <br>
+        <br>
+        <br>
         <div>
-            <canvas ref="myChart" :height="chartHeight" :width="chartWidth" class="mt-n1"></canvas>
+            <canvas ref="myChart" :height="chartHeight" :width="chartWidth" class="mt-9"></canvas>
         </div>                
     <VertNav/>
     <FooterMvp/>
@@ -203,9 +206,15 @@ import Chart from 'chart.js/auto';
             },
         },        
         mounted () {
+            // const allCookies = cookies.get();
+            // const headers = {};
+            // for (const cookieName in allCookies) {
+            //     headers[cookieName] = allCookies[cookieName];
+            // }
             axios.request({
                 method: "GET",
                 url: this.url + "/portfolio",
+                // headers: headers,
                 headers: {
                     'token' : cookies.get('clientToken'),
                 },
