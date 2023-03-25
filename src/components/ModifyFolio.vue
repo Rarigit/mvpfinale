@@ -22,7 +22,7 @@
                                             <v-row align="center" justify="center">
                                                 <v-col cols="12" sm="8">
                                                     <v-text-field
-                                                    v-model="id"
+                                                    v-model="portId"
                                                     label="Enter Portfolio ID:"
                                                     placeholder="John"
                                                     prepend-icon="mdi-account"
@@ -70,9 +70,9 @@
                                                 <br>
                                             </v-card-text>
                                             <div class="text-center">
-                                                <h2 class="text-center">Are you sure you want to delete?</h2>
+                                                <h2 class="text-center">Do you want to delete your portfolio?</h2>
                                                 <h3 class="text-center">
-                                                    Delete your profile here
+                                                    Delete your portfolio here
                                                 </h3>
                                                 <DeleteFolio/>
                                             </div>
@@ -111,7 +111,7 @@ import DeleteFolio from "@/components/DeleteFolio.vue"
             return {
                 url: process.env.VUE_APP_API_URL,
                 show1: false,
-                id: "",
+                portId: "",
                 name: "",
                 purchasePrice: "",
                 quantity: "",
@@ -124,7 +124,7 @@ import DeleteFolio from "@/components/DeleteFolio.vue"
                     url: this.url + "/portfolio",
                     // headers: this.headers,
                     headers: {
-                        'portId' : cookies.get('portfolioId_1'),
+                        'portId' : this.portId,
                         'token' : cookies.get('clientToken'),
                     },
                     data: {

@@ -13,7 +13,6 @@
         <v-btn text @click="scroll('news')" class="text-yellow" router-link to="/registerClient">Sign-Up</v-btn>
         <v-btn text @click="scroll('sign-up')" class="text-yellow" router-link to="/loginClient">Log-in</v-btn>
         <v-btn text @click="scroll('predict')" class="text-yellow">Predict</v-btn>
-        <v-btn text @click="scroll('watch-list')" class="text-yellow" router-link to="/watch-list">Watch-list</v-btn>
     </v-app-bar>
     </div>
 </template>

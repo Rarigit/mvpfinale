@@ -9,7 +9,7 @@
                             <v-list-item-content>
                                 <h1 class="black--text mx-auto">Parse</h1>
                                 <v-text-field class="mb-2" large prepend-icon="mdi-file-document"></v-text-field>
-                                <p class="pFont">Parse data in order to get current price and compare it to metrcics</p>
+                                <p class="pFont">Parse real-time data in order to get current price. Compare it to different metrics and optimize your trading strategy</p>
                             </v-list-item-content>
                         </v-list-item>
                     </v-app-bar>
@@ -22,7 +22,7 @@
                             <v-list-item-content>
                                 <h1 class="black--text mx-auto">Predict</h1>
                                 <v-text-field class="mb-2" large prepend-icon="mdi-chart-line"></v-text-field>
-                                <p class="pFont">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum voluptas explicabo modi ea neque, quibusdam atque, suscipit magni quia accusamus repellat at. Voluptate fugiat numquam obcaecati aut placeat! Illum, quaerat!</p>
+                                <p class="pFont">Estimate the price of an asset for the next 24 hours using technical and fundamental analysis</p>
                             </v-list-item-content>
                         </v-list-item>
                     </v-app-bar>
@@ -35,7 +35,7 @@
                             <v-list-item-content>
                                 <h1 class="black--text mx-auto">Profit</h1>
                                 <v-text-field class="mb-2" large prepend-icon="mdi-cash"></v-text-field>
-                                <p class="pFont">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eos est quaerat excepturi natus. Hic sunt iste nemo. Expedita adipisci assumenda eveniet iure exercitationem. Repellat, autem dicta qui sapiente vel nihil!</p>
+                                <p class="pFont">Develop a strategy and journal your trades so that you can win big in the market</p>
                             </v-list-item-content>
                         </v-list-item>
                     </v-app-bar>

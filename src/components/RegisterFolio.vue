@@ -73,7 +73,7 @@
                                                 <h1 class="text-center">Select only from the following coins: </h1>
                                                 <br>
                                                 <h2 class="text-center black--text">
-                                                    Bitcoin, Ethereum, Tether, BNB, Litecoin, Avalanche, Matic, Uniswap, Solana, Polkadot
+                                                    Bitcoin, Ethereum, BNB, Polygon, Solana, Polkadot, Litecoin, Avalanche, Uniswap, Chainlink
                                                 </h2>
                                             </v-card-text>
                                             <br>
@@ -88,6 +88,13 @@
             <br>
             <br>
             <br>
+            <v-row class="mx-auto">
+                    <v-spacer></v-spacer>
+                <v-btn color="black white--text" large class="styleButton" @click="logOut">Client Logout</v-btn>
+                    <v-spacer></v-spacer>
+                <v-btn color="black white--text" large class="styleButton" router-link to="/portfolio">Portfolios</v-btn>
+                    <v-spacer></v-spacer>
+            </v-row>
             <br>
             <br>
             <br>
@@ -135,6 +142,12 @@ import FooterMvp from "@/components/FooterMvp.vue";
             }
         },
         methods: {
+            logOut() {
+                cookies.remove(`clientToken`)
+                cookies.remove('client')
+                cookies.remove('portfolioId')
+                router.push(`/`)
+            },
             postFolio() {
                 axios.request({
                     method: "POST",
@@ -147,8 +160,8 @@ import FooterMvp from "@/components/FooterMvp.vue";
                     clientEmail: this.formData.clientEmail,
                 }
                 }).then((response)=>{
-                    console.log("Successfully registered new portfolio!")
                     console.log(response)
+                    console.log("Successfully registered new portfolio!")
                     let portId = response.data.portId;
                     cookies.set(`portfolioId`, portId)
                     router.push('/portProfile')

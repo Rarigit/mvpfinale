@@ -110,9 +110,9 @@ import ModifyFolio from "@/components/ModifyFolio.vue";
                 console.log(response);
                 this.portfolios = response.data;
                 
-                this.portfolios.forEach((portfolio) => {
-                    cookies.set(`portfolioId_${portfolio.id}`, portfolio.id)
-                });
+                // this.portfolios.forEach((portfolio) => {
+                //     cookies.set(`portfolioId_${portfolio.id}`, portfolio.id)
+                // });
                 console.log("Successfully retrieved client data");
                 console.log("Success");
                 this.createChart();

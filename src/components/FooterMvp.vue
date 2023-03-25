@@ -28,7 +28,6 @@
                 'News',
                 'Sign-up',
                 'Predict',
-                'Watch-list',
             ],
         }),
     }

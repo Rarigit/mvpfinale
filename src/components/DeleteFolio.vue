@@ -1,8 +1,8 @@
 <template>
     <div>
-        <v-container>
-            <v-btn color="black white--text" large class="styleButton" @click="deleteFolio">Delete Portfolio</v-btn>
-        </v-container>
+        <label for="Enter portId#">Enter portfolio ID to delete:</label>
+        <input id="Delete port ID" type="text" v-model="portId">
+        <v-btn color="black white--text" large class="styleButton" @click="deleteFolio">Delete Portfolio</v-btn>
     </div>
 </template>
 
@@ -16,36 +16,40 @@ import cookies from "vue-cookies";
         data() {
             return {
                 url: process.env.VUE_APP_API_URL,
+                portId: "",
             }
         },
         methods: {
+            // getPortfolioIdCookieValue(portfolioId) {
+            //     const cookieName = `portfolioId_${portfolioId}`;
+            //     return cookies.get(cookieName);
+            // },
             deleteFolio() {
                 axios.request({
                     method: "DELETE",
                     url: this.url + "/portfolio",
-                headers: {
-                    'portId' : cookies.get('portfolioId')
-                },
-                data: {
-                    id: this.id,
-                    name: this.name,
-                    purchasePrice: this.purchasePrice,
-                    quantity: this.quantity,
-                }
-                }).then((response)=>{
-                console.log(response);
-                console.log("Successful Deletion");
-                alert("Successfully Deleted Portfolio!")
-                cookies.remove(`clientToken`)
-                cookies.remove(`client`)
-                cookies.remove(`portfolioId`)
-                router.push('/loginClient')
-                }).catch((error)=>{
-                console.log(error);
-                console.log("Failed to delete!")
-                })
-            }
-        },
+                    headers: {
+                        // 'portId' : this.getPortfolioIdCookieValue(15)
+                        'portId' : this.portId
+                    },
+                    data: {
+                        id: this.portId,
+                        name: this.name,
+                        purchasePrice: this.purchasePrice,
+                        quantity: this.quantity,
+                    }
+                    }).then((response)=>{
+                    console.log(response);
+                    console.log("Successful Deletion");
+                    alert("Successfully Deleted Portfolio!")
+                    cookies.remove(`portfolioId`)
+                    router.push('/portfolio')
+                    }).catch((error)=>{
+                    console.log(error);
+                    console.log("Failed to delete!")
+                    })
+                    }
+            },
     }
 </script>
 
