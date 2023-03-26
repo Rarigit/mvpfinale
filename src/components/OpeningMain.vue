@@ -4,20 +4,6 @@
         <div class="opening-animation"></div>
             <div class="backImage">
                 <img src="@/assets/logohigh.png"/>
-                    <!-- <v-row justify="center">
-                        <v-col cols="16" md="6">
-                            <v-slide-x-transition>
-                                <v-card v-if="showCard">
-                                    <div class="cardContent mx-auto">
-                                        WHEN CARD SER!
-                                    </div>
-                                </v-card>
-                            </v-slide-x-transition>
-                            <v-row class="mx-auto">
-                                <v-btn color="black--text blue" @click="dropCard">Drop Card</v-btn>
-                            </v-row>
-                        </v-col>
-                    </v-row> -->
             </div>
             <div class="loaderWrapper" v-if="isLoading">
                 <span class="loader"><span class="loader-inner"></span></span>
@@ -56,19 +42,8 @@
 </script>
 
 <style scoped>
-
-/* .cardContent {
-    padding: 1px;
-    font: blue;
-    justify-content: center;
-    display: flex;
-    justify-self: center;
-    align-items: center;
-    background-color: #029aff;
-    height: 40vh;
-    width: 100%;
-} */
-
+/*Watched a tutorial on animations to get most of this CSS, couldn't figure out how to get the animation before page load. 
+Managed to get opening animation cover at least 50%.*/
 .opening-animation {
     transform: scaleX(0);
     transform-origin: left;
@@ -105,7 +80,7 @@
     position: absolute;
     top: 0%;
     left: 0;
-    background-color: orange;
+    background-color: rgb(255, 255, 255);
     display: flex;
     justify-content: center;
     align-items: center;

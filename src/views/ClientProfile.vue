@@ -66,16 +66,7 @@ import EditClients from "@/components/EditClients.vue";
             logOut() {
                 cookies.remove(`clientToken`)
                 cookies.remove('client')
-                cookies.remove('portfolioId_1')
-                cookies.remove('portfolioId_5')
-                cookies.remove('portfolioId_6')
-                cookies.remove('portfolioId_7')
-                cookies.remove('portfolioId_8')
-                cookies.remove('portfolioId_17')
-                cookies.remove('portfolioId_18')
-                cookies.remove('portfolioId_2')
-                cookies.remove('portfolioId_9')
-                cookies.remove('portfolioId_10')
+                cookies.remove('portfolioId')
                 router.push(`/`)
             },
         },

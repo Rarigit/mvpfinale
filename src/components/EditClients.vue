@@ -109,22 +109,11 @@ import DeleteClients from "@/components/DeleteClients.vue"
                     console.log(response);
                     console.log("Successful updated info!")
                     alert("Successfully updated Client Info.")
-                    // cookies.remove(`clientToken`)
-                    // cookies.remove(`client`)
-                    // router.push(`/loginClient`)
                     }).catch((error)=>{
                     console.log(error);
                     console.log("Failed to edit!")
                     })
             }
-        },
-        mounted () {
-            //Bun code messes up cookies upon refresh
-            //Deletes cookies after i press the back button. Hopefully it works. Yup it does upon refresh
-            // window.onbeforeunload = function() {
-            // document.cookie = "clientToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            // document.cookie = "client=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            // };
         },
     }
 </script>

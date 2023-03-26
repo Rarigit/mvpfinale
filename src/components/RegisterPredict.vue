@@ -1,13 +1,10 @@
 <template>
     <div class="bodyWrap">
-        <HeaderMvp/>
-        <br>
-        <br>
         <br>
         <br>
         <br>
         <v-row class="mx-auto black--text">
-            <h1 class="mx-auto pFont">PortFolio Register</h1>
+            <h1 class="mx-auto pFont">Make a Prediction</h1>
         </v-row>
         <br>
         <br>
@@ -30,34 +27,28 @@
                                                     prepend-icon="mdi-mouse"
                                                     />
                                                     <v-text-field
-                                                    v-model="formData.name"
-                                                    :rules="[() => !!formData.name || 'This field is required']"
-                                                    label="Enter Coin Name"
+                                                    v-model="formData.predictedPrice"
+                                                    label="Enter Prediction"
                                                     placeholder="John"
+                                                    prepend-icon="mdi-currency-usd"
+                                                    />
+                                                    <v-text-field
+                                                    v-model="formData.durationPredict"
+                                                    label="Enter Duration of Prediction in HH:MM:SS"
+                                                    prepend-icon="mdi-clock"
+                                                    placeholder="Doe"
+                                                    />
+                                                    <v-text-field
+                                                    v-model="formData.coin"
+                                                    label="Enter Coin"
                                                     prepend-icon="mdi-currency-btc"
-                                                    />
-                                                    <v-text-field
-                                                    v-model="formData.purchasePrice"
-                                                    label="Enter Purchase Price"
-                                                    prepend-icon="mdi-cash"
                                                     placeholder="Doe"
                                                     />
-                                                    <v-text-field
-                                                    v-model="formData.quantity"
-                                                    label="Enter quantity"
-                                                    prepend-icon="mdi-shovel"
-                                                    placeholder="Doe"
-                                                    />
-                                                    <v-text-field
-                                                    v-model="formData.clientEmail"
-                                                    :rules="emailRules"
-                                                    label="Enter e-mail"
-                                                    prepend-icon="mdi-email"
-                                                    />
+                                                <!-- </div> -->
                                                     <br>
                                                     <br>
                                                     <v-row class="mx-auto">
-                                                        <v-btn color="green" large class="styleButton" @click="postFolio">PortFolio Register</v-btn>
+                                                        <v-btn color="green" large class="styleButton" @click="postPredict">Predict</v-btn>
                                                     </v-row>
                                                     <br>
                                                     <br>
@@ -92,7 +83,7 @@
                     <v-spacer></v-spacer>
                 <v-btn color="black white--text" large class="styleButton" @click="logOut">Client Logout</v-btn>
                     <v-spacer></v-spacer>
-                <v-btn color="black white--text" large class="styleButton" router-link to="/portfolio">Portfolios</v-btn>
+                <v-btn color="black white--text" large class="styleButton" router-link to="/predictions">Predictions Home</v-btn>
                     <v-spacer></v-spacer>
             </v-row>
             <br>
@@ -101,7 +92,6 @@
             <br>
             <br>
         </v-container>
-        <FooterMvp/>
     </div>
 </template>
 
@@ -109,80 +99,69 @@
 import axios from "axios";
 import router from "@/router";
 import cookies from "vue-cookies"
-import HeaderMvp from "@/components//HeaderMvp.vue";
-import FooterMvp from "@/components/FooterMvp.vue";
-
 
     export default {
-        name: "RegisterFolio",
-        components: {
-            HeaderMvp,
-            FooterMvp
-        },
+        name: "RegisterPredict",
         data() {
             return {
                 url: process.env.VUE_APP_API_URL,
                 show1: false,
                 formData: {
                     clientId: "",
-                    name: "",
-                    purchasePrice: "",
-                    quantity: "",
-                    clientEmail: "",
-                },
-                rules: {
-                    required: value => !!value || 'Required.',
-                    min: v => v.length >= 8 || 'Min 8 characters',
-                    emailMatch: () => (`The email and password you entered don't match`),
-                },
-                emailRules: [
-                    v => !!v || 'E-mail is required',
-                    v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-                ],
+                    predictedPrice: "",
+                    durationPredict: "",
+                    coin: "",
+                },                                           
             }
         },
         methods: {
             logOut() {
                 cookies.remove(`clientToken`)
                 cookies.remove('client')
-                cookies.remove('portfolioId')
+                cookies.remove('predictResult')
                 router.push(`/`)
             },
-            postFolio() {
+            postPredict() {
                 axios.request({
                     method: "POST",
-                    url: this.url + "/portfolio",
+                    url: this.url + "/predict",
                 data: {
                     clientId: this.formData.clientId,
-                    name: this.formData.name,
-                    purchasePrice: this.formData.purchasePrice,
-                    quantity: this.formData.quantity,
-                    clientEmail: this.formData.clientEmail,
+                    predictedPrice: this.formData.predictedPrice,
+                    durationPredict: this.formData.durationPredict,
+                    coin: this.formData.coin,
                 }
                 }).then((response)=>{
                     console.log(response)
-                    console.log("Successfully registered new portfolio!")
-                    let portId = response.data.portId;
-                    cookies.set(`portfolioId`, portId)
-                    router.push('/portProfile')
+                    let predict_result = response.data.predict_result;
+                    cookies.set('predictResult', predict_result)
+                    console.log("Successfully registered new prediction!")
+                    router.push('/predictions')
                 }).catch((error)=>{
                     console.log(error);
-                    alert("Error: Please ensure that the coin selected is from the list of coins provided, also please verify that the purchase-price that you've inputted is below the ATH price of that coin");
+                    alert("Error: Prediction failed to register");
                 })
-            }
-        },
-        mounted () {
-            this.$root.$emit('portfolioId');
+            },
         },
     }
 </script>
 
 <style scoped>
+
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap');
 .pFont {
     font-family: 'Lato', sans-serif;
 }
 
-
+.bodyWrap{
+        background-image: url("https://imgs.search.brave.com/tx5-FkCpUvzin3WUBdZCKwlE-7ejg-niWAoXHIbM-O0/rs:fit:1200:1080:1/g:ce/aHR0cDovL3d3dy5w/aXhlbHN0YWxrLm5l/dC93cC1jb250ZW50/L3VwbG9hZHMvMjAx/Ni8wNi9Eb3dubG9h/ZC1MaWdodC1CbHVl/LUhELUJhY2tncm91/bmRzLmpwZw");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+.styleButton{
+        color: white;
+        height: 12vh;
+        box-shadow: 2px 2px 3px;
+    }
 
 </style>

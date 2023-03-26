@@ -21,6 +21,20 @@
                 </v-list-item-content>
             </v-list-item>
             </v-list>
+            <v-list>
+            <v-list-item class="mb-10" router to="/predictions">
+                <v-list-item-content>
+                    <v-text-field class="mb-1" large prepend-icon="mdi-eye" label="Predictions"></v-text-field>
+                </v-list-item-content>
+            </v-list-item>
+            </v-list>
+            <v-list>
+            <v-list-item class="mb-10" router to="/registerPredict">
+                <v-list-item-content>
+                    <v-text-field class="mb-1" large prepend-icon="mdi-account" label="Predict Register"></v-text-field>
+                </v-list-item-content>
+            </v-list-item>
+            </v-list>
             <v-list style="position: absolute; bottom:0" class="ml-12" flat>
                 <v-btn @click="logOut" tile outlined dark class="ml-5" >Sign Out</v-btn>
             </v-list>
@@ -46,6 +60,8 @@ import router from '@/router';
             logOut() {
                 cookies.remove(`clientToken`)
                 cookies.remove('client')
+                cookies.remove('portfolioId')
+                cookies.remove('predictResult')
                 router.push(`/`)
                 this.loggedIn = false
             },

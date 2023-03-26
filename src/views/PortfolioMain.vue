@@ -206,11 +206,6 @@ import Chart from 'chart.js/auto';
             },
         },        
         mounted () {
-            // const allCookies = cookies.get();
-            // const headers = {};
-            // for (const cookieName in allCookies) {
-            //     headers[cookieName] = allCookies[cookieName];
-            // }
             axios.request({
                 method: "GET",
                 url: this.url + "/portfolio",

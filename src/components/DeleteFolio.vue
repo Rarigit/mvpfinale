@@ -1,7 +1,10 @@
 <template>
     <div>
-        <label for="Enter portId#">Enter portfolio ID to delete:</label>
-        <input id="Delete port ID" type="text" v-model="portId">
+        <br>
+        <label for="Enter portId#">Enter portfolio ID: </label>
+        <input id="Delete port ID" type="text" class="highlight" v-model="portId">
+        <v-spacer></v-spacer>
+        <br>
         <v-btn color="black white--text" large class="styleButton" @click="deleteFolio">Delete Portfolio</v-btn>
     </div>
 </template>
@@ -20,16 +23,11 @@ import cookies from "vue-cookies";
             }
         },
         methods: {
-            // getPortfolioIdCookieValue(portfolioId) {
-            //     const cookieName = `portfolioId_${portfolioId}`;
-            //     return cookies.get(cookieName);
-            // },
             deleteFolio() {
                 axios.request({
                     method: "DELETE",
                     url: this.url + "/portfolio",
                     headers: {
-                        // 'portId' : this.getPortfolioIdCookieValue(15)
                         'portId' : this.portId
                     },
                     data: {
@@ -55,4 +53,8 @@ import cookies from "vue-cookies";
 
 <style scoped>
 
+.highlight{
+    border: 2px solid yellow;
+    background-color: lawngreen;
+}
 </style>

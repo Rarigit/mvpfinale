@@ -71,6 +71,7 @@
                                             </v-card-text>
                                             <div class="text-center">
                                                 <h2 class="text-center">Do you want to delete your portfolio?</h2>
+                                                <br>
                                                 <h3 class="text-center">
                                                     Delete your portfolio here
                                                 </h3>

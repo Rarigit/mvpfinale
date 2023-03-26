@@ -12,7 +12,7 @@
         <v-spacer></v-spacer>
         <v-btn text @click="scroll('news')" class="text-yellow" router-link to="/registerClient">Sign-Up</v-btn>
         <v-btn text @click="scroll('sign-up')" class="text-yellow" router-link to="/loginClient">Log-in</v-btn>
-        <v-btn text @click="scroll('predict')" class="text-yellow">Predict</v-btn>
+        <v-btn text @click="scroll('predict')" class="text-yellow" router-link to="/loginClient">Predict</v-btn>
     </v-app-bar>
     </div>
 </template>
@@ -35,7 +35,4 @@
     background-color: #029aff;
 }
 
-/* .vImage{
-    height: 4vh;
-} */
 </style>

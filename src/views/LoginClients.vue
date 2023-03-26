@@ -160,14 +160,6 @@ import FooterMvp from "@/components/FooterMvp.vue";
                 })
             }
         },
-        mounted () {
-            //Bun this function it keeps deleting my cookies on every save i do as its a refresh
-            //Deletes cookies after i press the back button. Hopefully it works. Yup it does upon refresh
-            // window.onbeforeunload = function() {
-            // document.cookie = "clientToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            // document.cookie = "client=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            // };
-        },
     }
 </script>
 

@@ -53,6 +53,5 @@ import cookies from "vue-cookies";
 .styleButton{
     color: white;
     height: 7vh;
-    /* box-shadow: 2px 2px 3px; */
 }
 </style>

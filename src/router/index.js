@@ -17,6 +17,8 @@ import RegisterFolio from "@/components/RegisterFolio.vue"
 import ModifyFolio from "@/components/ModifyFolio.vue"
 import PortfolioProfile from "@/views/PortfolioProfile.vue"
 import DeleteFolio from "@/components/DeleteFolio.vue"
+import RegisterPredict from "@/components/RegisterPredict.vue"
+import PredictionsMain from "@/views/PredictionsMain.vue"
 
 
 Vue.use(VueRouter)
@@ -89,6 +91,14 @@ const routes = [
   {
     path: "/deleteFolio",
     component: DeleteFolio
+  },
+  {
+    path: "/registerPredict",
+    component: RegisterPredict
+  },
+  {
+    path: "/predictions",
+    component: PredictionsMain
   },
 
 

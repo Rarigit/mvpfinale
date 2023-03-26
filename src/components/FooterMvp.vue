@@ -25,7 +25,7 @@
         name: "FooterMvp",
         data: () => ({
             links: [
-                'News',
+                'Log-In',
                 'Sign-up',
                 'Predict',
             ],
