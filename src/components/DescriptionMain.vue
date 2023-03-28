@@ -35,7 +35,7 @@
                             <v-list-item-content>
                                 <h1 class="black--text mx-auto">Profit</h1>
                                 <v-text-field class="mb-2" large prepend-icon="mdi-cash"></v-text-field>
-                                <p class="pFont">Develop a strategy and journal your trades so that you can win big in the market</p>
+                                <p class="pFont">Develop a strategy and log your trades so that you can win big in the market</p>
                             </v-list-item-content>
                         </v-list-item>
                     </v-app-bar>
